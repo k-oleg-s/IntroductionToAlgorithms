@@ -14,19 +14,19 @@ internal class Tests
         int[] ints = new int[15];
         Random rnd = new Random();
 
-        Node N1 = new Node(1);
+        Node l = new Node(1);
 
         for (int i = 0; i < 15; i++)
         {
             ints[i] = rnd.Next(100);
-             N1.AddNode(ints[i]);
+             l.AddNode(ints[i]);
         }
 
-        Node N2 = N1.FindNode(ints[3]);
-        N1.AddNodeAfter(N2, 150);
-        N1.GetCount();
-        N1.RemoveNode(N2);
-        N1.RemoveNode(ints[10]);
+        Node N2 = l.FindNode(ints[3]);
+        l.AddNodeAfter(N2, 150);
+        Console.WriteLine(l.GetCount());
+        l.RemoveNode(N2);
+        l.RemoveNode(4);
 
 
     }

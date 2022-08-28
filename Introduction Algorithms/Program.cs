@@ -5,4 +5,5 @@ Console.WriteLine("Start");
 
 
 var t = new Tests();
-//t.Test_binary_search();
+t.Test_binary_search();
+t.TestNodeClass();

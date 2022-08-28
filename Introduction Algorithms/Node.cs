@@ -25,6 +25,7 @@ public class Node : ILinkedList
         }
         var newNode = new Node( value);
         node.NextNode = newNode;
+        newNode.PrevNode = node;
     }
 
     public void AddNodeAfter(Node n1, int value)
@@ -100,7 +101,8 @@ public class Node : ILinkedList
 
         n1.NextNode = n2;
         n2.PrevNode = n1;
-        startNode = null;
+        startNode.PrevNode = null;
+        startNode.NextNode = null;
     }
 
     public void RemoveNode(Node n )
