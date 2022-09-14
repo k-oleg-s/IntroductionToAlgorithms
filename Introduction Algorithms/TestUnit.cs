@@ -9,7 +9,7 @@ namespace Introduction_Algorithms;
 
 public class TestUnit
 {
-    HashSet<Sometxt> hs = new HashSet<Sometxt>();
+    HashSet<string> hs = new HashSet<string>();
     string[] sm = new string[1000];
 
     public TestUnit()
@@ -18,7 +18,7 @@ public class TestUnit
         {
             string t = GetRandomString(5);
             this.sm[i] = t;
-            hs.Add(new Sometxt() { text = t });
+            hs.Add(t);
         }
     }
 
@@ -36,8 +36,7 @@ public class TestUnit
     public bool IsExistsInHashSet()
     {
         string s = "text to find";
-        var sv = new Sometxt() { text = s };
-        return hs.Contains(sv);
+        return hs.Contains(s);
     }
     string GetRandomString(int pwdLength)
     {

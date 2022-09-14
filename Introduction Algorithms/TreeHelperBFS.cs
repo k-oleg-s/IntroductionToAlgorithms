@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Introduction_Algorithms;
 
-public static class TreeHelper
+
+public static class TreeHelperBFS
 {
     public static NodeInfo[] GetTreeInLine(ITree tree)
     {
@@ -19,6 +20,7 @@ public static class TreeHelper
             var element = bufer.Dequeue();
             returnArray.Add(element);
             var depth = element.Depth + 1;
+
             if (element.Node.LeftChild != null)
             {
                 var left = new NodeInfo()
@@ -28,6 +30,17 @@ public static class TreeHelper
                 };
                 bufer.Enqueue(left);
             }
+
+            if (element.Node.LeftChild == null && element.Node.RightChild != null)
+            {
+                var left = new NodeInfo()
+                {
+                    Node = new TreeNode() { Value=0},
+                    Depth = depth,
+                };
+                bufer.Enqueue(left);
+            }
+
             if (element.Node.RightChild != null)
             {
                 var right = new NodeInfo()
@@ -37,7 +50,22 @@ public static class TreeHelper
                 };
                 bufer.Enqueue(right);
             }
+            if (element.Node.RightChild == null && element.Node.LeftChild != null)
+            {
+                var right = new NodeInfo()
+                {
+                    Node = new TreeNode() { Value = 0 },
+                    Depth = depth,
+                };
+                bufer.Enqueue(right);
+            }
         }
         return returnArray.ToArray();
+    }
+
+    public static  string s(int x)
+    {
+        var separator = new string('.', x);
+        return separator;
     }
 }
