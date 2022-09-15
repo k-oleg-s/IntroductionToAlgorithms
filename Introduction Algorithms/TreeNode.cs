@@ -64,7 +64,7 @@ public class TreeNode : ITree
 
     public void PrintTree()
     {
-        NodeInfo[] nis = TreeHelperBFS.GetTreeInLine(Root);
+        NodeInfo[] nis = TreeHelper.GetTreeInLine(Root);
 
         int deep = 0;
         int x = 30;
@@ -73,7 +73,7 @@ public class TreeNode : ITree
         StringBuilder sb = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
 
-        sb.Append(s(x+8));
+        sb.Append(s(x + 8));
         sb2.Append(s(x));
 
         foreach (NodeInfo n in nis)
@@ -94,7 +94,7 @@ public class TreeNode : ITree
 
             if (pair) d1 = 3; else d1 = 12;
             pair = !pair;
-            sb.Append(s(12) +  $"   {n.Node.Value}   ");
+            sb.Append(s(12) + $"   {n.Node.Value}   ");
             sb2.Append(s(12) + $"/     \\ ");
 
 
@@ -124,7 +124,7 @@ public class TreeNode : ITree
             tmp.Root = tmp;
             tmp.Parent = null;
 
-            foreach (NodeInfo ni in TreeHelperBFS.GetTreeInLine(tmp))
+            foreach (NodeInfo ni in TreeHelper.GetTreeInLine(tmp))
             {
                 tmp_parent.Insert(ni.Node.Value);
             }

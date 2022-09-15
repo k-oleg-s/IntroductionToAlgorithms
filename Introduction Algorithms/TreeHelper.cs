@@ -7,8 +7,65 @@ using System.Threading.Tasks;
 namespace Introduction_Algorithms;
 
 
-public static class TreeHelperBFS
+public static class TreeHelper
 {
+    public static void GoDFS(TreeNode tree)
+    {
+        var quP = new Queue<TreeNode>();
+        var quDeep = new Queue<int>();
+
+        int deep = 1;
+        var n = tree.Root;
+        quP.Enqueue(n);
+        quDeep.Enqueue(deep);
+
+        while (quP.Count > 0)
+        {
+            n = quP.Dequeue();
+            deep = quDeep.Dequeue();
+            Console.WriteLine($"deep : {deep}   parent={n.Parent?.Value ?? .0}  v={n.Value}  ");
+
+            if (n.RightChild != null) { quP.Enqueue(n.RightChild); quDeep.Enqueue(deep+1); }
+
+            while (n.LeftChild != null)
+            {
+                deep++;
+                var tmp = n.LeftChild;
+                if (tmp.RightChild != null) { quP.Enqueue(tmp.RightChild); quDeep.Enqueue(deep); }
+                Console.WriteLine($"deep : {deep}   parent={tmp.Parent?.Value ?? .0}  v={tmp.Value}  ");
+                n = tmp;
+
+            }
+        }
+    }
+
+    public static void GoBFS(TreeNode tree)
+    {
+        var quP = new Queue<TreeNode>();
+        var quN = new Queue<TreeNode>();
+
+        int deep = 1;
+        var n = tree.Root;
+        quP.Enqueue(n);
+
+        while (quP.Count > 0)
+        {
+            Console.Write($"deep : {deep}  ");
+            foreach (var q in quP)
+            {
+                Console.Write($"  parent={q.Parent?.Value ?? .0}  v={q.Value}  ");
+                if (q.LeftChild != null) quN.Enqueue(q.LeftChild);
+                if (q.RightChild != null) quN.Enqueue(q.RightChild);
+            }
+            Console.WriteLine("  ");
+
+            quP = new Queue<TreeNode>(quN);
+            quN.Clear();
+
+            deep++;
+        }
+    }
+
     public static NodeInfo[] GetTreeInLine(ITree tree)
     {
         var bufer = new Queue<NodeInfo>();
@@ -35,7 +92,7 @@ public static class TreeHelperBFS
             {
                 var left = new NodeInfo()
                 {
-                    Node = new TreeNode() { Value=0},
+                    Node = new TreeNode() { Value = 0 },
                     Depth = depth,
                 };
                 bufer.Enqueue(left);
@@ -63,7 +120,7 @@ public static class TreeHelperBFS
         return returnArray.ToArray();
     }
 
-    public static  string s(int x)
+    public static string s(int x)
     {
         var separator = new string('.', x);
         return separator;
