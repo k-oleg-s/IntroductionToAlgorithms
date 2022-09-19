@@ -37,6 +37,7 @@ for (int i = 0; i < 15; i++)
 // РАСПЕЧАТКА ДЕРЕВА
 //t.PrintTree();
 
+Console.WriteLine(" ----------BFS---------- ");
 TreeHelper.GoBFS(t);
 
 Console.WriteLine(" ----------DFS---------- ");

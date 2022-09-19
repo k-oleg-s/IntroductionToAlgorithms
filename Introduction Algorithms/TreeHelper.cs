@@ -11,8 +11,8 @@ public static class TreeHelper
 {
     public static void GoDFS(TreeNode tree)
     {
-        var quP = new Queue<TreeNode>();
-        var quDeep = new Queue<int>();
+        var quP = new Queue<TreeNode>(); // нода 
+        var quDeep = new Queue<int>();  // глубина ноды
 
         int deep = 1;
         var n = tree.Root;
@@ -23,15 +23,18 @@ public static class TreeHelper
         {
             n = quP.Dequeue();
             deep = quDeep.Dequeue();
+
             Console.WriteLine($"deep : {deep}   parent={n.Parent?.Value ?? .0}  v={n.Value}  ");
 
+            // Если node пошёл в право - то только добавим его в очередь , без вывода инфы на консоль.
             if (n.RightChild != null) { quP.Enqueue(n.RightChild); quDeep.Enqueue(deep+1); }
 
+            // Если node пошёл влево, выводим данные на экран, попутно "запоминая" ноды справа, без вывода инфы на консоль.
             while (n.LeftChild != null)
             {
                 deep++;
                 var tmp = n.LeftChild;
-                if (tmp.RightChild != null) { quP.Enqueue(tmp.RightChild); quDeep.Enqueue(deep); }
+                if (tmp.RightChild != null) { quP.Enqueue(tmp.RightChild); quDeep.Enqueue(deep+1); }
                 Console.WriteLine($"deep : {deep}   parent={tmp.Parent?.Value ?? .0}  v={tmp.Value}  ");
                 n = tmp;
 
@@ -41,8 +44,9 @@ public static class TreeHelper
 
     public static void GoBFS(TreeNode tree)
     {
-        var quP = new Queue<TreeNode>();
-        var quN = new Queue<TreeNode>();
+        // обрабатываем по принципу волны. Волна идёт вниз по дереву.
+        var quP = new Queue<TreeNode>(); // это фронт волны , для этих нод выводим инфу на консоль 
+        var quN = new Queue<TreeNode>(); // это "следующий" фронт волны.
 
         int deep = 1;
         var n = tree.Root;
