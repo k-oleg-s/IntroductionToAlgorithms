@@ -1,47 +1,45 @@
 ﻿
-using BenchmarkDotNet.Running;
 using Introduction_Algorithms;
 using System.Text;
 
 Console.WriteLine("Start");
 
-//BenchmarkRunner.Run<TestUnit>();
 
-//var tst = new TestUnit();
-//tst.IsExistsInMassive();
-//tst.IsExistsInHashSet();
 
 
 
 
 // Создадим ROOT node. Ей зададим к примеру значение 50
-var t = new TreeNode();
-t.Insert(50);
-
-//  ЗАПОЛНЕНИЕ ДЕРЕВА
-int x=0, y = -1;
+var graf = new Graf();
 
 
-for (int i = 0; i < 15; i++)
-{
-    x = new Random().Next(100);
+Node n1 = new Node() { Value = 50 };
+var n2 = graf.AddNode(n1, 40, 4);
+var n3 = graf.AddNode(n2, 60, 6);
+var n4 = graf.AddNode(n3, 45, 3);
+var n5 = graf.AddNode(n4, 75, 2);
+var n6 = graf.AddNode(n5, 80, 5);
 
-    t.Insert(x);
-    if (i == 5) y = x; // ЗАПОМНИМ 9-е ЗНАЧЕНИЕ
-}
+var n7 = graf.AddNode(n2, 39, 1);
 
-// ПРОВЕРКА этого 9го ЗНАЧЕНИЯ
-//Console.WriteLine($" значение {y}, у Node Value ={t.GetNodeByValue(y).Value} ");
+n7.Edges.Add(new Edge() { N=n4, Weight=3});
+n4.Edges.Add(new Edge() { N = n7, Weight = 3 });
 
+var n8 = graf.AddNode(n5, 49, 1);
+
+n1.Edges.Add(new Edge() { N = n6, Weight = 9 });
+n6.Edges.Add(new Edge() { N = n1, Weight = 9 });
+
+n7.Edges.Add(new Edge() { N = n6, Weight = 4 });
+n6.Edges.Add(new Edge() { N = n7, Weight = 4 });
 
 // РАСПЕЧАТКА ДЕРЕВА
-//t.PrintTree();
 
 Console.WriteLine(" ----------BFS---------- ");
-TreeHelper.GoBFS(t);
+graf.GoGraphBFS(n1);
 
 Console.WriteLine(" ----------DFS---------- ");
-TreeHelper.GoDFS(t);
+graf.GoGraphDFS(n1);
 
 
 
