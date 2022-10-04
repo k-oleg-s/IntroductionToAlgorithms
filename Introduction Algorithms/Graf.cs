@@ -10,22 +10,20 @@ public class Graf
 {
     public void GoGraphBFS(Node start_node)
     {
-        var passed = new HashSet<Node>();
-        var front = new HashSet<Node>();
-        var in_front = new HashSet<Node>();
-        var q = new Queue<Node>();
+        var passed = new HashSet<Node>();   // Здесь помещаем те ноды по которым информация уже выведена -  волна уже прошла
+        var q = new Queue<Node>();  // Основная очередь -  фронт волны
 
         var n = start_node;
 
-         while (n != null)
+        while (n != null)
         {
             passed.Add(n);
             Console.WriteLine($" V={n.Value}  ");
             List<Edge> edges = n.Edges;
             foreach (Edge e in edges)
             {
-                    Console.Write($" w={e.Weight}  to  node {e.N.Value} ");
-                if (!passed.Contains(e.N))
+                Console.Write($" w={e.Weight}  to  node {e.N.Value} ");
+                if (!passed.Contains(e.N))      //  т.е. по алгоритму волны - если нода ещё не пройдена , то помещаем в фронт волны
                 {
                     q.Enqueue(e.N);
                     passed.Add(e.N);
@@ -33,34 +31,49 @@ public class Graf
             }
             if (q.Count > 0) n = q.Dequeue(); else n = null;
             Console.WriteLine(" ");
-         }
+        }
     }
 
     public void GoGraphDFS(Node start_node)
     {
-        var passed = new HashSet<Node>();
-        var front = new List<Node>();
-        var in_front = new List<Node>();
+        var passed = new HashSet<Node>();  // Здесь помещаем те ноды по которым информация уже выведена
 
-        var q = new Queue<Node>();
+        var stack = new Stack<Node>();      // Используем для следующего шага - что бы уйти вглубь
+        var que = new Queue<Node>();        // Очередь нодов , в которые не пошли при первом проходе. Когда закончатся ноды в стэке (т.е. в глубине) - вернёмся сюда
+        que.Enqueue(start_node);
+        Node tmp;
 
-        front.Add(start_node);
-        passed.Add(start_node);
-
-
-        while (front.Count > 0)
+        while (que.Count > 0 || stack.Count > 0)
         {
-            foreach (Node n in front)
+            if (stack.Count > 0) tmp = stack.Pop();     // вначале идём вглубину
+            else tmp = que.Dequeue();       // если нету нодов вглубине - возвращаемся сюда 
+
+            List<Edge> edges = tmp.Edges;
+            passed.Add(tmp);
+
+            Console.WriteLine($" Node   {tmp.Value}  ");
+
+
+            if (edges.Count == 1)       
             {
-                passed.Add(n);
-                Console.WriteLine($" V={n.Value}  ");
-                List<Edge> edges = n.Edges;
+                Console.Write($" Node   {tmp.Value}  лист, далее Edges нету");
+            }
+            else if (edges.Count > 1)
+            {
+
+                if (!passed.Contains(edges.First().N))  // выбор следующей ноды в глубину - просто беру First из Edges
+                {
+                    stack.Push(edges.First().N);
+                    passed.Add(edges.First().N);
+                }
+
                 foreach (Edge e in edges)
                 {
-                    Console.Write($" w={e.Weight}  to  node {e.N.Value} ");
+                    Console.Write($" Edge weight  {e.Weight}  to node {e.N.Value} ;  ");    // для текущей ноды перечислим все пути, их вес и ноды куда ведут эти пути
+                    if (e.N != edges.First().N && !passed.Contains(e.N)) { que.Enqueue(e.N); passed.Add(e.N); }
                 }
             }
-            front = GetNewFront(front, passed);
+            Console.WriteLine(" ");
         }
     }
 

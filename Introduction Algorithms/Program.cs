@@ -9,11 +9,13 @@ Console.WriteLine("Start");
 
 
 
-// Создадим ROOT node. Ей зададим к примеру значение 50
+
 var graf = new Graf();
 
-
+// Создадим ROOT node. Ей зададим к примеру значение 50
 Node n1 = new Node() { Value = 50 };
+
+// Добавляем остальные node - картинка прилагается.
 var n2 = graf.AddNode(n1, 40, 4);
 var n3 = graf.AddNode(n2, 60, 6);
 var n4 = graf.AddNode(n3, 45, 3);
@@ -33,11 +35,15 @@ n6.Edges.Add(new Edge() { N = n1, Weight = 9 });
 n7.Edges.Add(new Edge() { N = n6, Weight = 4 });
 n6.Edges.Add(new Edge() { N = n7, Weight = 4 });
 
+
+
+
 // РАСПЕЧАТКА ДЕРЕВА
 
 Console.WriteLine(" ----------BFS---------- ");
 graf.GoGraphBFS(n1);
 
+Console.WriteLine("  \n \n");
 Console.WriteLine(" ----------DFS---------- ");
 graf.GoGraphDFS(n1);
 
